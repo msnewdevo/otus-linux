@@ -25,6 +25,16 @@ MACHINES = {
                         :dfile => './sata4.vdi',
                         :size => 250, # Megabytes
                         :port => 4
+                },
+                :sata5 => {
+                        :dfile => './sata5.vdi',
+                        :size => 250, # Megabytes
+                        :port => 5
+                },
+                :sata6 => {
+                        :dfile => './sata6.vdi',
+                        :size => 250, # Megabytes
+                        :port => 6
                 }
 
 	}
@@ -63,12 +73,14 @@ Vagrant.configure("2") do |config|
                      end
                   end
           end
+          
  	  box.vm.provision "shell", inline: <<-SHELL
 	      mkdir -p ~root/.ssh
               cp ~vagrant/.ssh/auth* ~root/.ssh
 	      yum install -y mdadm smartmontools hdparm gdisk
   	  SHELL
-
+            
+          box.vm.provision "shell", path: "script.sh" 
       end
   end
 end
